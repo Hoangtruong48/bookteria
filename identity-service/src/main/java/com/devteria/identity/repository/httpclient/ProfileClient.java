@@ -10,6 +10,6 @@ import com.devteria.identity.dto.response.UserProfileResponse;
 
 @FeignClient(name = "profile-service", url = "${app.services.profile}")
 public interface ProfileClient {
-    @PostMapping(value = "/internal/users", produces = MediaType.APPLICATION_JSON_VALUE)
-    UserProfileResponse createProfile(@RequestBody ProfileCreationRequest request);
+    @PostMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+    UserProfileReponse createProfile(@RequestBody ProfileCreationRequest request);
 }
