@@ -4,10 +4,8 @@ server:
     context-path: /identity
 
 spring:
-  application:
-    name: identity-service
   datasource:
-    url: "jdbc:mysql://localhost:3366/bookteria_identity"
+    url: "jdbc:mysql://localhost:3306/bookteria_identity"
     driverClassName: "com.mysql.cj.jdbc.Driver"
     username: root
     password: root
@@ -15,14 +13,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-  kafka:
-    bootstrap-servers: localhost:9094
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
 jwt:
   signerKey: "1TjXchw5FloESb63Kc+DFhTARvpWL4jUGCwfGWxuG5SIf/1y/LgJxHnMqaF6A/ij"
 
 app:
   services:
-    profile: http://localhost:8082/profile
+    profile: http://localhost:8081/profile

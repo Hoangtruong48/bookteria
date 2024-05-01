@@ -3,8 +3,6 @@ package com.devteria.identity.service;
 import java.util.HashSet;
 import java.util.List;
 
-import com.devteria.identity.mapper.ProfileMapper;
-import com.devteria.identity.repository.feign.ProfileService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,9 +16,11 @@ import com.devteria.identity.entity.Role;
 import com.devteria.identity.entity.User;
 import com.devteria.identity.exception.AppException;
 import com.devteria.identity.exception.ErrorCode;
+import com.devteria.identity.mapper.ProfileMapper;
 import com.devteria.identity.mapper.UserMapper;
 import com.devteria.identity.repository.RoleRepository;
 import com.devteria.identity.repository.UserRepository;
+import com.devteria.identity.repository.httpclient.ProfileClient;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class UserService {
     UserMapper userMapper;
     ProfileMapper profileMapper;
     PasswordEncoder passwordEncoder;
-    ProfileService profileService;
+    ProfileClient profileClient;
 
     public UserResponse createUser(UserCreationRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_EXISTED);
@@ -50,15 +50,11 @@ public class UserService {
 
         user.setRoles(roles);
         user = userRepository.save(user);
+
         var profileRequest = profileMapper.toProfileCreationRequest(request);
         profileRequest.setUserId(user.getId());
-        try{
-            var profileResponse = profileService.createProfile(profileRequest);
-            log.info("Created profile: {}", profileResponse.toString());
 
-        } catch (Exception ex){
-            log.error(ex.getMessage());
-        }
+        profileClient.createProfile(profileRequest);
 
         return userMapper.toUserResponse(user);
     }
