@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -34,5 +36,11 @@ public class UserProfileService {
                 userProfileRepository.findById(id).orElseThrow(() -> new RuntimeException("Profile not found"));
 
         return userProfileMapper.toUserProfileReponse(userProfile);
+    }
+
+    public List<UserProfileResponse> getAllProfiles() {
+        var profiles = userProfileRepository.findAll();
+
+        return profiles.stream().map(userProfileMapper::toUserProfileReponse).toList();
     }
 }
