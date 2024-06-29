@@ -4,6 +4,8 @@ server:
     context-path: /profile
 
 spring:
+  jpa:
+    show-sql: true
   application:
     name: profile-service
   neo4j:
