@@ -1,6 +1,5 @@
 
 version: "3"
-name: bookteria
 services:
   kafka:
     image: 'bitnami/kafka:3.7.0'
