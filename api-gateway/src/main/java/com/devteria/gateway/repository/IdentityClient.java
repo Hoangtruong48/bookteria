@@ -1,6 +1,6 @@
 package com.devteria.gateway.repository;
 
-import com.devteria.gateway.dto.ApiResponse;
+import com.devteria.gateway.dto.response.ApiResponse;
 import com.devteria.gateway.dto.request.IntrospectRequest;
 import com.devteria.gateway.dto.response.IntrospectResponse;
 import org.springframework.http.MediaType;
